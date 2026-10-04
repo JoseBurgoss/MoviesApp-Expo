@@ -44,8 +44,7 @@ Then scan the QR code with Expo Go, or press `a` (Android) / `i` (iOS). `npm run
 
 ### Configuration
 
-- **Firebase:** `firebase.js` reads `process.env.FIREBASE_*` (API key, auth domain, project ID, storage bucket, sender ID, app ID, measurement ID). Expo SDK 52 only inlines variables prefixed with `EXPO_PUBLIC_`, so either rename them (for example `EXPO_PUBLIC_FIREBASE_API_KEY`, in `.env` and in `firebase.js`) or set your config values directly.
-- **TMDb:** the API key is defined as `API_KEY` inside the list, detail and review screens in `screens/`. Replace it with your own key.
+- **Configuration:** copy `.env.example` to `.env` and fill in your Firebase web config (`EXPO_PUBLIC_FIREBASE_*`) and your TMDb key (`EXPO_PUBLIC_TMDB_API_KEY`). Expo inlines `EXPO_PUBLIC_` variables at build time; `.env` is git-ignored.
 
 ## Project structure
 

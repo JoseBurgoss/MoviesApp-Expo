@@ -1,3 +1,4 @@
+import { TMDB_API_KEY } from '../config/tmdb';
 import { StyleSheet, Text, View, Image, ScrollView, Pressable, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect, useContext } from 'react';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
@@ -52,7 +53,7 @@ export default function MovieDetailScreen({ route }) {
 
   const fetchActors = async () => {
     try {
-      const API_KEY = 'd8353dcaa6b589573747e5ada48834e6';
+      const API_KEY = TMDB_API_KEY;
       const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${API_KEY}`;
       const response = await fetch(url);
       const data = await response.json();

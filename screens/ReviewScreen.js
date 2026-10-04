@@ -1,3 +1,4 @@
+import { TMDB_API_KEY } from '../config/tmdb';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
@@ -19,7 +20,7 @@ export default function ReviewScreen({ navigation }) {
 
   const fetchPopularMovies = async () => {
     try {
-      const API_KEY = 'd8353dcaa6b589573747e5ada48834e6';
+      const API_KEY = TMDB_API_KEY;
       const url = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=es-ES&page=1`;
       const response = await fetch(url);
 
@@ -36,7 +37,7 @@ export default function ReviewScreen({ navigation }) {
 
   const fetchPopularSeries = async () => {
     try {
-      const API_KEY = 'd8353dcaa6b589573747e5ada48834e6';
+      const API_KEY = TMDB_API_KEY;
       const url = `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=es-ES&page=1`;
       const response = await fetch(url);
 
@@ -54,7 +55,7 @@ export default function ReviewScreen({ navigation }) {
   const searchItems = async (query) => {
     if (query.length > 0) {
       try {
-        const API_KEY = 'd8353dcaa6b589573747e5ada48834e6';
+        const API_KEY = TMDB_API_KEY;
         const movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=es-ES&query=${query}&page=1&include_adult=false`;
         const seriesUrl = `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&language=es-ES&query=${query}&page=1&include_adult=false`;
 

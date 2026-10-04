@@ -1,3 +1,4 @@
+import { TMDB_API_KEY } from '../config/tmdb';
 import { StyleSheet, Text, View, Image, FlatList, TextInput, Pressable, Modal, TouchableOpacity, ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Stars from '../shared/Stars';
@@ -20,7 +21,7 @@ export default function SeriesListScreen({ navigation }) {
 
   const fetchSeries = async () => {
     try {
-      const API_KEY = 'd8353dcaa6b589573747e5ada48834e6';
+      const API_KEY = TMDB_API_KEY;
       let url = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=es-ES&sort_by=${sortOption}${category ? `&with_genres=${category}` : ''}`;
 
       const response = await fetch(url);
@@ -54,7 +55,7 @@ export default function SeriesListScreen({ navigation }) {
   const searchSeries = async (query) => {
     if (query.length > 0) {
       try {
-        const API_KEY = 'd8353dcaa6b589573747e5ada48834e6';
+        const API_KEY = TMDB_API_KEY;
         const url = `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&language=es-ES&query=${query}&page=1&include_adult=false`;
 
         const response = await fetch(url);
