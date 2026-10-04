@@ -1,145 +1,74 @@
-# AppPeliculas - Movie Discovery Mobile App
+# CineMania (MoviesApp-Expo)
 
-## English
+A React Native + Expo mobile app to browse movies and TV series from The Movie Database (TMDb), with Firebase accounts, favorites and star-rated reviews.
 
-### Overview
-AppPeliculas is a React Native mobile application for discovering movies and TV series. The app integrates with The Movie Database (TMDb) API to provide comprehensive content catalogs with search capabilities, user authentication via Firebase, and personal favorites management.
+<p align="center">
+  <img src="DemoImages/IMG_5730.PNG" width="220" alt="Movie list">
+  <img src="DemoImages/IMG_5733.PNG" width="220" alt="Movie detail with review form">
+  <img src="DemoImages/IMG_5737.PNG" width="220" alt="Favorites">
+</p>
 
-### Key Features
-- **Content Discovery**: Browse popular movies and TV series [1](#0-0) 
-- **Real-time Search**: Search movies and series with autocomplete dropdown [2](#0-1) 
-- **Genre Filtering**: Filter content by categories like Action, Drama, Mystery
-- **User Authentication**: Firebase-based login and registration
-- **Favorites Management**: Save and manage favorite movies/series [3](#0-2) 
-- **User Reviews**: Create and view movie/series reviews
-- **User Profile**: Manage account settings and view personal content [4](#0-3) 
+<sub>Screenshots are from an earlier build; the current UI is in Spanish and has four bottom tabs.</sub>
 
-### Technology Stack
-- **Framework**: React Native 0.76.3 with Expo 52.0.11 [5](#0-4) 
-- **Backend**: Firebase (Authentication & Firestore)
-- **API**: The Movie Database (TMDb) API
-- **Navigation**: React Navigation with stack and drawer patterns
-- **State Management**: React Context API with AsyncStorage
+## Features
 
-### Prerequisites
-- Node.js >= 18.0.0
-- npm or yarn
-- Expo CLI
-- iOS Simulator (for iOS development) or Android Studio (for Android development)
+- Email/password sign-up and sign-in with Firebase Authentication; user profiles stored in Firestore.
+- Movies and Series tabs fed by TMDb `discover` endpoints (Spanish locale), with genre filter (Action, Drama, Mystery) and search by title.
+- Detail screens for movies and series with overview, cast (TMDb credits) and community reviews.
+- Favorites: add/remove from the detail screen, listed in their own tab (Firestore `favorites` collection, per user).
+- Reviews: 1–5 star rating plus comment, written from the detail screen or the Reviews tab (Firestore `reviews` collection).
+- Profile screen with the user's favorites and reviews, password change and sign-out.
+- Navigation: stack for auth, drawer + bottom tabs (Películas, Series, Reseñas, Favoritos) once signed in.
 
-### Installation & Setup
+## Tech stack
 
-1. **Clone the repository**
+- Expo SDK 52, React Native 0.76.3, React 18.3
+- React Navigation 6 (stack, drawer, bottom tabs), Reanimated 3, Gesture Handler
+- Firebase 10 (Authentication + Cloud Firestore)
+- TMDb REST API via `fetch`
+- React Context for auth and favorites state
+- `@react-native-picker/picker`, `@expo/vector-icons`
+
+## Getting started
+
+Requirements: Node.js 18+, the Expo Go app on a device (or an Android emulator / iOS simulator), a Firebase project with Email/Password auth and Firestore enabled, and a TMDb API key.
+
 ```bash
-git clone https://github.com/JoseBurgoss/Apicacion_Movil_Peliculas.git
-cd Apicacion_Movil_Peliculas
-```
-
-2. **Install dependencies**
-```bash
+git clone https://github.com/JoseBurgoss/MoviesApp-Expo.git
+cd MoviesApp-Expo
 npm install
+npm start          # expo start -c (clears the Metro cache)
 ```
 
-3. **Configure API Keys**
-   - Get a TMDb API key from [themoviedb.org](https://www.themoviedb.org/settings/api)
-   - Set up Firebase project and get configuration
-   - Update API keys in the respective screen files
+Then scan the QR code with Expo Go, or press `a` (Android) / `i` (iOS). `npm run android`, `npm run ios` and `npm run web` are also available.
 
-4. **Start the development server**
-```bash
-npx expo start
+### Configuration
+
+- **Firebase:** `firebase.js` reads `process.env.FIREBASE_*` (API key, auth domain, project ID, storage bucket, sender ID, app ID, measurement ID). Expo SDK 52 only inlines variables prefixed with `EXPO_PUBLIC_`, so either rename them (for example `EXPO_PUBLIC_FIREBASE_API_KEY`, in `.env` and in `firebase.js`) or set your config values directly.
+- **TMDb:** the API key is defined as `API_KEY` inside the list, detail and review screens in `screens/`. Replace it with your own key.
+
+## Project structure
+
+```text
+App.js                 # Auth stack, drawer and stack navigators
+firebase.js            # Firebase app, Auth and Firestore instances
+context/
+├── AuthContext.js     # Sign-in, sign-up, sign-out, current user
+└── FavoritesContext.js
+screens/
+├── HomeScreen.js      # Bottom tabs: movies, series, reviews, favorites
+├── MovieListScreen.js / SeriesListScreen.js
+├── MovieDetailScreen.js / SeriesDetailScreen.js
+├── ReviewScreen.js, FavoritesScreen.js, ProfileScreen.js
+└── SignInScreen.js / SignUpScreen.js
+shared/                # CustomInput, MovieReviewForm, Stars
+DemoImages/            # Screenshots
 ```
-
-5. **Run on device/simulator**
-   - Press `i` for iOS simulator
-   - Press `a` for Android emulator
-   - Scan QR code with Expo Go app on physical device
-
-### Project Structure
-```
-├── screens/
-│   ├── MovieListScreen.js      # Movie discovery and search
-│   ├── SeriesListScreen.js     # TV series discovery and search
-│   ├── ProfileScreen.js        # User profile management
-│   └── FavoritesScreen.js      # Favorites management
-├── context/                    # React Context providers
-├── shared/                     # Shared components
-├── app.json                    # Expo configuration
-└── package.json               # Dependencies
-```
-
----
 
 ## Español
 
-### Descripción General
-AppPeliculas es una aplicación móvil React Native para descubrir películas y series de TV. La aplicación se integra con la API de The Movie Database (TMDb) para proporcionar catálogos completos de contenido con capacidades de búsqueda, autenticación de usuarios vía Firebase y gestión de favoritos personales.
+App móvil hecha con React Native y Expo para explorar películas y series de TMDb. Incluye registro e inicio de sesión con Firebase, búsqueda y filtro por género, favoritos y reseñas con estrellas guardadas en Firestore, y un perfil con cambio de contraseña.
 
-### Características Principales
-- **Descubrimiento de Contenido**: Navegar películas y series populares
-- **Búsqueda en Tiempo Real**: Buscar películas y series con dropdown de autocompletado
-- **Filtrado por Género**: Filtrar contenido por categorías como Acción, Drama, Misterio
-- **Autenticación de Usuario**: Inicio de sesión y registro basado en Firebase
-- **Gestión de Favoritos**: Guardar y gestionar películas/series favoritas
-- **Reseñas de Usuario**: Crear y ver reseñas de películas/series
-- **Perfil de Usuario**: Gestionar configuración de cuenta y ver contenido personal
+---
 
-### Stack Tecnológico
-- **Framework**: React Native 0.76.3 con Expo 52.0.11
-- **Backend**: Firebase (Autenticación y Firestore)
-- **API**: The Movie Database (TMDb) API
-- **Navegación**: React Navigation con patrones stack y drawer
-- **Gestión de Estado**: React Context API con AsyncStorage
-
-### Prerrequisitos
-- Node.js >= 18.0.0
-- npm o yarn
-- Expo CLI
-- iOS Simulator (para desarrollo iOS) o Android Studio (para desarrollo Android)
-
-### Instalación y Configuración
-
-1. **Clonar el repositorio**
-```bash
-git clone https://github.com/JoseBurgoss/Apicacion_Movil_Peliculas.git
-cd Apicacion_Movil_Peliculas
-```
-
-2. **Instalar dependencias**
-```bash
-npm install
-```
-
-3. **Configurar claves API**
-   - Obtener una clave API de TMDb desde [themoviedb.org](https://www.themoviedb.org/settings/api)
-   - Configurar proyecto Firebase y obtener configuración
-   - Actualizar claves API en los archivos de pantalla respectivos
-
-4. **Iniciar el servidor de desarrollo**
-```bash
-npx expo start
-```
-
-5. **Ejecutar en dispositivo/simulador**
-   - Presionar `i` para simulador iOS
-   - Presionar `a` para emulador Android
-   - Escanear código QR con la app Expo Go en dispositivo físico
-
-### Estructura del Proyecto
-```
-├── screens/
-│   ├── MovieListScreen.js      # Descubrimiento y búsqueda de películas
-│   ├── SeriesListScreen.js     # Descubrimiento y búsqueda de series
-│   ├── ProfileScreen.js        # Gestión de perfil de usuario
-│   └── FavoritesScreen.js      # Gestión de favoritos
-├── context/                    # Proveedores React Context
-├── shared/                     # Componentes compartidos
-├── app.json                    # Configuración Expo
-└── package.json               # Dependencias
-```
-
-![login-img](https://github.com/user-attachments/assets/090d7718-8359-4f0d-9911-23e08b381f2f)
-![IMG_5730](https://github.com/user-attachments/assets/91f5d336-6d6b-4164-a622-a4db25396b43)
-![IMG_5731](https://github.com/user-attachments/assets/c4dcab7c-bcb3-4897-928c-6131c1fa18a6)
-![IMG_5735](https://github.com/user-attachments/assets/bc98e397-672d-4376-88c8-340f79fd2f7d)
-![Uploading IMG_5737.PNG…]()
+Author: José Burgos — https://jose-burgos-portfolio.vercel.app · https://www.linkedin.com/in/jose-burgos-/
